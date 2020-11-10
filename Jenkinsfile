@@ -38,5 +38,39 @@ pipeline {
                 
             }
         }
-   }
+        
+        stage('APPROVAL') {
+            when {
+              expression { params.autoApprove == false }
+            }
+
+            steps {
+                script {
+                    def plan = readFile 'tfplan.txt'
+                    input message: "Do you want to apply the plan?",
+                        parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
+                }
+            }
+        }
+        
+        
+        stage('APPLY') {
+            when {
+              expression { params.destroy == false }
+            }
+            steps {
+                sh "terraform apply -no-color -input=false tfplan"
+            }
+        }
+        
+        stage('DESTROY') {
+            when {
+              expression { params.destroy == true }
+            }
+            steps {
+                sh "terraform destroy -no-color -auto-approve"
+            }
+        }
+  
+    }
 }
