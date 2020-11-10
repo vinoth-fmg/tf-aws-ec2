@@ -30,7 +30,6 @@ pipeline {
         
         stage('PLAN') {
             steps {
-                 sh 'sed -i "s/IMGID/${imageid}/g" ec2.tf'
                  sh 'terraform init -no-color -input=false'
                  sh 'terraform plan -no-color -input=false -out tfplan'
                  sh 'terraform show -no-color tfplan > tfplan.txt'
