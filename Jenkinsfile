@@ -20,6 +20,10 @@ pipeline {
     stages {
         
         stage('INITIALIZE') {
+            
+            when {
+              expression { params.destroy == false }
+            }
             steps {
                  sh 'sed -i "s/REGION/${REGION}/g" variables.tf'
                  sh 'sed -i "s/IMGID/${AMIID}/g" variables.tf'
@@ -31,6 +35,11 @@ pipeline {
         }
         
         stage('PLAN') {
+            
+            when {
+              expression { params.destroy == false }
+            } 
+            
             steps {
                  sh 'terraform init -no-color -input=false'
                  sh 'terraform plan -no-color -input=false -out tfplan'
@@ -68,6 +77,8 @@ pipeline {
               expression { params.destroy == true }
             }
             steps {
+                sh 'rm -f ec2.tf'
+                sh 'terraform init -no-color -input=false'
                 sh "terraform destroy -no-color -auto-approve"
             }
         }
