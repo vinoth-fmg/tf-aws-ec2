@@ -77,7 +77,7 @@ pipeline {
               expression { params.destroy == true }
             }
             steps {
-                sh 'rm -f ec2.tf'
+                sh 'rm -f ec2.tf variables.tf'
                 sh 'terraform init -no-color -input=false'
                 sh "terraform destroy -no-color -auto-approve"
             }
