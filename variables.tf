@@ -17,3 +17,8 @@ variable "instancecount" {
   default     = "CNT"
   description = "No of Instances to be spinned up"
 }
+
+variable "subnetid" {
+  default     = "SUBNETID"
+  description = "Instance subnet id"
+}
