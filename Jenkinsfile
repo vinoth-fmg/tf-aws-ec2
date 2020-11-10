@@ -2,7 +2,9 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'imageid', defaultValue: 'imageid', description: 'Input the AMI id for EC2 instance')
+        string(name: 'IMGID', defaultValue: 'imageid', description: 'Input the AMI id for EC2 instance')
+        string(name: 'INSTANCETYPE', defaultValue: 'INSTANCETYPE', description: 'Specify the Instance Type')
+        string(name: 'CNT', defaultValue: 'Count', description: 'Specify the Count of Instances')
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
         booleanParam(name: 'destroy', defaultValue: false, description: 'Enable if action is to destroy resources')
     }
@@ -14,6 +16,15 @@ pipeline {
     }
 
     stages {
+        
+        stage('INITIALIZE') {
+            steps {
+                 sh 'sed -i "s/IMGID/${IMGID}/g" variables.tf'
+                 sh 'sed -i "s/INSTANCETYPE/${INSTANCETYPE}/g" variables.tf'
+                 sh 'sed -i "s/CNT/${CNT}/g" variables.tf'
+                                
+            }
+        }
         
         stage('PLAN') {
             steps {
