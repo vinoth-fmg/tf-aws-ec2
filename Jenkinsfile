@@ -6,6 +6,7 @@ pipeline {
         string(name: 'AMIID', defaultValue: 'imageid', description: 'Input the AMI id for EC2 instance')
         string(name: 'INSTANCETYPE', defaultValue: 'INSTANCETYPE', description: 'Specify the Instance Type')
         string(name: 'CNT', defaultValue: 'Count', description: 'Specify the Count of Instances')
+        string(name: 'SUBNETID', defaultValue: 'SUBNETID', description: 'Specify the Subnet id')
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
         booleanParam(name: 'destroy', defaultValue: false, description: 'Enable if action is to destroy resources')
     }
@@ -24,6 +25,7 @@ pipeline {
                  sh 'sed -i "s/IMGID/${AMIID}/g" variables.tf'
                  sh 'sed -i "s/INSTANCETYPE/${INSTANCETYPE}/g" variables.tf'
                  sh 'sed -i "s/CNT/${CNT}/g" variables.tf'
+                sh 'sed -i "s/SUBNETID/${SUBNETID}/g" variables.tf'
                                 
             }
         }
