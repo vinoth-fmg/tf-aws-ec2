@@ -5,6 +5,6 @@ resource "aws_instance" "aws_instance_devops" {
   subnet_id = var.subnetid
   
   tags = {
-    Name = "DEVOPS-DEMO-EC2-count.index"
+    Name = "DEVOPS-DEMO-EC2-${count.index}"
   }
 }
