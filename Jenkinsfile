@@ -17,7 +17,9 @@ pipeline {
         
         stage('PLAN') {
             steps {
-                sh 'terraform init -no-color -input=false'
+                 sh 'terraform init -no-color -input=false'
+                 sh 'terraform plan -no-color -input=false -out tfplan'
+                 sh 'terraform show -no-color tfplan > tfplan.txt'
                 
             }
         }
