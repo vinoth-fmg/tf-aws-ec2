@@ -13,7 +13,7 @@ variable "instancetype" {
   description = "Instance Type"
 }
 
-variable "count" {
-  default     = "COUNT"
+variable "instancecount" {
+  default     = "CNT"
   description = "No of Instances to be spinned up"
 }
