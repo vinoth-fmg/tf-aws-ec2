@@ -33,7 +33,7 @@ resource "aws_instance" "aws_instance_devops" {
   key_name = "jenkins-devops"
   
   # Our Security group to allow HTTP access
-  security_groups = [aws_security_group.aws_sg_devops.name]
+  vpc_security_group_ids = [aws_security_group.aws_sg_devops.id]
   
   # User data which installs and Configures nginx webserver
   user_data = file("userdata.sh")
