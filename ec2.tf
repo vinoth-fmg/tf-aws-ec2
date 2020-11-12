@@ -3,6 +3,7 @@
 resource "aws_security_group" "aws_sg_devops" {
   name        = "aws-sg-devopsdemo"
   description = "Http access Globally"
+  vpc_id      = "vpc-0eeac674"
 
  # HTTP access from anywhere
   ingress {
