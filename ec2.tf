@@ -36,7 +36,8 @@ resource "aws_instance" "aws_instance_devops" {
   vpc_security_group_ids = [aws_security_group.aws_sg_devops.id]
   
   # User data which installs and Configures nginx webserver
-  user_data = file("userdata.sh")
+  # user_data = file("userdata.sh")
+  user_data = file("userdata-chef.sh")
   
   tags = {
     Name = "DEVOPS-DEMO-EC2-${count.index}"
