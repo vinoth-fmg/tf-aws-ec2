@@ -9,26 +9,24 @@ sudo cd /etc/chef/
 # Install chef
 sudo curl -L https://omnitruck.chef.io/install.sh | bash || error_exit 'could not install chef'
 
-NODE_NAME="node-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1)"
+NODE_NAME="nodenew2"
 
 # Create client.rb
-sudo cat > "/etc/chef/client.rb" << EOF
-log_location            STDOUT
+sudo echo "log_location  STDOUT
 chef_server_url         'https://172.31.27.132/organizations/devops'
 validation_client_name  'devops-validator'
 validation_key          '/etc/chef/devops-validator.pem'
 node_name               "${NODE_NAME}"
 ssl_verify_mode          :verify_none
-chef_license             'accept'
-EOF
+chef_license             'accept' " > /etc/chef/client.rb
+    
 
 
 # Create first-boot.json
-sudo cat > "/etc/chef/first-boot.json" << EOF
-{
+sudo echo '{
    "run_list" :[
    "recipe[devopsdemo]"
    ]
-}
-EOF
+}'  > /etc/chef/first-boot.json
+
 sudo chef-client -j /etc/chef/first-boot.json
